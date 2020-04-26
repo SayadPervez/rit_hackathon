@@ -1,9 +1,0 @@
-<script defer>
-  function loadChatWidget() {
-	chatteron.init({
-	clientId: "YubDa9kW2OjJxLz4PcWaO"
-  });
-}
-</script>
-<script defer src="https://web.leena.ai/scripts/sdk.js" onload="loadChatWidget();">
-</script>
