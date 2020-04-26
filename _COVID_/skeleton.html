@@ -1,0 +1,374 @@
+<html>
+    <head>
+        <title>
+            COPE UP GOOD HOPE
+        </title>
+        <script>/*
+            function x1(){
+                document.getElementById("n1").style.border="8px solid cyan";
+            }
+            function y1(){
+                document.getElementById("n1").style.border="2px solid crimson;";
+            }
+            function x2(){
+                document.getElementById("n2").style.border="8px solid cyan";
+            }
+            function y2(){
+                document.getElementById("n2").style.border="2px solid crimson;";
+            }
+            function x3(){
+                document.getElementById("n3").style.border="8px solid cyan";
+            }
+            function y3(){
+                document.getElementById("n3").style.border="2px solid crimson;";
+            }*/
+        </script>
+        <script src="https://kit.fontawesome.com/943a366770.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body id="body">
+        <script type="text/javascript">
+            
+
+            
+window.onload=function(){
+var ctx=document.getElementById("plot");
+var cty=document.getElementById("bar");
+
+
+async function getData(){
+    world="https://covid19.mathdro.id/api"
+    india="https://api.covid19india.org/data.json"
+    let response = await fetch(india);
+    var d = await response.json();
+    var time_series=d.cases_time_series;
+    var stateWise=d.statewise;
+    let X=[];
+    let Y=[];
+    stateWise.forEach(ele => {
+        X.push(ele.state);
+        Y.push(ele.recovered);
+    });
+    let x=[];
+    let y=[];
+    time_series.forEach(element => {
+        x.push(element.date);
+        y.push(element.totalrecovered);
+    });
+    x=x.slice(Math.max(x.length - 20, 0));
+    y=y.slice(Math.max(y.length - 20, 0));
+    lineChart.data.labels=x;
+    barChart.data.labels=X;
+    X=X.splice(0,1);
+    lineChart.data.datasets[0].data=y;
+    barChart.data.datasets[0].data=Y;
+    Y=Y.splice(0,1);
+    var i = 0;
+    theLabel = document.getElementById("count2");
+    var interval = setInterval(function(){ 
+    if (i == y[y.length-1]-y[y.length-2]) clearInterval(interval);
+    theLabel.innerHTML = i; 
+    i++;
+}, 
+0.1);    
+    document.getElementById('count1').innerHTML=String(y[y.length-1]);
+    lineChart.update();
+    barChart.update();
+}
+getData();
+var barChart=new Chart(cty,{
+    type:'bar',
+    data:{
+        labels:[],
+        datasets:[
+            {
+                label:"TOTAL CORONA RECOVERIES PER STATE",
+                data:[],
+                backgroundColor: 'rgba(25,135,240,0.7)',
+            borderColor: 
+                'rgba(0,0,130,1)'
+            ,
+            borderWidth: 2
+            },
+        ]
+    },options: {title: {
+            display: true,
+            text: 'Custom Chart Title',
+            fontColor:'rgba(0,0,0,1)'
+        },legend: {
+            labels: {
+                // This more specific font property overrides the global property
+                fontColor: 'rgba(0,0,0,1)'
+            }
+        },
+    scales: {
+        xAxes:[{
+            gridLines: {
+                display:false,
+            } 
+        }],
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        },{
+            gridLines: {
+                display:false,
+            }   
+        }]
+    }
+}
+});
+var lineChart= new Chart(ctx,{
+    type:'line',
+    data:{
+        labels:[],
+        datasets:[
+            {
+                label:"CORONA RECOVERIES",
+                data:[],
+                backgroundColor: [
+                'rgba(0, 255, 0, 0.4)',
+            ],
+            borderColor: [
+                'rgba(0,110,0,1)',
+            ],
+            borderWidth: 2
+            },
+        ]
+    },options: {title: {
+            display: true,
+            text: 'Custom Chart Title',
+            fontColor:'rgba(0,0,0,1)'
+        },legend: {
+            labels: {
+                // This more specific font property overrides the global property
+                fontColor: 'rgba(0,0,0,1)'
+            }
+        },
+    scales: {
+        xAxes:[{
+            gridLines: {
+                display:false,
+            } 
+        }],
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        },{
+            gridLines: {
+                display:false,
+            }   
+        }]
+    }
+}
+});
+}
+
+setInterval(read(), 300000);
+
+async function read(){
+    let response = await fetch("./fdata.txt");
+    var d = await response.text();
+    var data = d.split("\n").slice(0,3);
+    x=data[0];
+    x=x.split('`');
+    document.getElementById("n1a").innerHTML="<font color='black'>"+String(x[0])+"</font><br><br>";
+    document.getElementById("n1b").innerHTML=String(x[1]);
+    function bc1(){
+        window.open((String(x[2])), '_blank');}
+    y=data[1];
+    y=y.split('`');
+    document.getElementById("n2a").innerHTML="<font color='black'>"+String(y[0])+"</font><br><br>";
+    document.getElementById("n2b").innerHTML=String(y[1]);
+    function bc2(){
+        window.open((String(y[2])), '_blank');
+    }
+    z=data[2];
+    z=z.split('`');
+    function bc3(){
+        window.open((String(z[2])), '_blank');
+    }
+    document.getElementById("n3a").innerHTML="<font color='black'>"+String(z[0])+"</font><br><br>";
+    document.getElementById("n3b").innerHTML=String(z[1]);
+    
+}
+
+async function sRank(){
+    const india="https://api.covid19india.org/data.json"
+    let response = await fetch(india);
+    var d = await response.json();
+    var stateWise=d.statewise;
+    var X=[];
+    var Y=[];
+    stateWise.forEach(ele => {
+        X.push(ele.state);
+        Y.push(ele.confirmed);
+    });
+    var max=Number(Y[0]);
+    console.log(max);
+    X.splice(0,1);
+    Y.splice(0,1);
+    
+    let q=document.getElementById("state").value;
+    var ind=X.indexOf(q);
+    var sel = Y[ind];
+    console.log(sel/max * 100);
+    if(sel >= 2000)  ans="HIGHLY INFECTIOUS ZONE  <i class='fas fa-exclamation-triangle'></i>  ";
+    else if((sel< 2000)&&(sel>= 500))  ans="<i class='fas fa-times-circle'>  INFECTIOUS ZONE  <i class='fas fa-times-circle'></i>";
+    else ans="SAFE ZONE  <i class='far fa-thumbs-up'></i>";
+    document.getElementById("answer").innerHTML=ans;
+
+}
+
+async function bc1(){
+    let response = await fetch("./fdata.txt");
+    var d = await response.text();
+    var data = d.split("\n").slice(0,3);
+    x=data[0];
+    x=x.split('`');
+        window.open((String(x[2])), '_blank');
+        }
+
+async function bc2(){
+    let response = await fetch("./fdata.txt");
+    var d = await response.text();
+    var data = d.split("\n").slice(0,3);
+    y=data[1];
+    y=y.split('`');
+        window.open((String(y[2])), '_blank');
+    }
+
+async function bc3(){
+    let response = await fetch("./fdata.txt");
+    var d = await response.text();
+    var data = d.split("\n").slice(0,3);
+        window.open((String(z[2])), '_blank');
+        z=data[2];
+    z=z.split('`');
+    }
+
+
+
+        </script>
+    <center>
+
+        <section style="width:max-content">
+        <div class="box" id="titlebox" style="padding:4px;">
+             <h1><b># WE SHALL OVERCOME <i class="fas fa-trophy"></i> !!</b></h1>
+        </div></section>
+
+        
+        <div id="base" >
+        <button class="subblocks" id="block1" disabled >Total Recovered<br> Patients:<br> <font size=36px><span id="count1">LOADING...</span><br><i class='fas fa-briefcase-medical'></i></font></button>
+        <section style="width:50%;height:500px;margin-left:1.5in;margin-right: auto;float: left;">
+            <br>
+        <canvas options="{showTooltips: false}" id="plot" height="200px" style="border:2px solid crimson;padding:4px;"></canvas>
+    <br><canvas options="{showTooltips: false}" id="bar" height="200px" style="border:2px solid crimson;padding:4px;"></canvas>
+        </section><button class="subblocks" id="block2" disabled><br>Total Recoveries <br> Today:<br> <font size=36px><span id="count2">LOADING...</span><br><i class='fas fa-user-nurse'></i></font></button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br><br>
+        <br><br>
+        <br><br>
+        <hr>
+        <div class="box">
+            <br>
+        <h2>SELECT YOUR STATE:  <i class="fas fa-map-marked-alt"></i></h2>
+        <select  name="state" id="state" class="form-control" style="width:20%" onchange="sRank()">
+            <option value="None">--SELECT AN OPTION--</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+            <option value="Daman and Diu">Daman and Diu</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="Puducherry">Puducherry</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+            </select><br><h2 id="answer"><h2></div>
+        <hr>
+        <b><h1><i class="fas fa-globe-africa"></i>  NEWS ON CORONA VIRUS  <i class="fas fa-satellite-dish"></i></h1></b>
+        <div style="border:2px solid crimson;display:flexbox;flex-direction: row;height:5.5in">
+                <div>
+                <button  onclick="bc1()" onmouseover="x1()" onmousemove="y1()" class="newsblock" id="n1" style="float:left;">
+                    <span class="news" id="n1a"></span>
+                    <span class="news" id="n1b"></span>
+                </button></div><div>
+                <button  onclick="bc2()" onmouseover="x2()" onmousemove="y2()" class="newsblock" id="n2"style="float:left;margin:24px;margin-left:1in;">
+                    <span class="news" id="n2a"></span>
+                    <span class="news" id="n2b"></span>
+                </button></div><div>
+                <button  onclick="bc3()" onmouseover="x3()" onmousemove="y3()" class="newsblock" id="n3" style="float:right;">
+                    <span class="news" id="n3a"></span>
+                    <span class="news" id="n3b"></span>
+                </button></div>
+        </div>
+        <br>
+       
+       <script defer>
+            function loadChatWidget() {
+              chatteron.init({
+              clientId: "YubDa9kW2OjJxLz4PcWaO"
+            });
+          }
+          </script>
+          <script defer src="https://web.leena.ai/scripts/sdk.js" onload="loadChatWidget();">
+          </script>
+        
+    </center>
+
+    </body>
+</html>
