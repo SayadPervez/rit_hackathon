@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <title>
+            PAPERWORK
+        </title>
+        <style>
+            b{
+                font-size:22px;
+                margin: 4px 4px;
+            }
+
+            #pic1{
+                background-image: url("https://github.com/SayadPervez/rit_hackathon/blob/master/img_1.jpg?raw=true");
+                background-position: center;
+    background-repeat: no-repeat;
+            }
+
+            #_3{
+                background-image: url("https://github.com/SayadPervez/rit_hackathon/blob/master/img_2.jpg?raw=true");
+                background-position: center;
+    background-repeat: no-repeat;
+    background-size:contain;
+            }
+
+            button{
+    background-image:linear-gradient(0deg,lime,green,lime);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+            }
+        </style>
+    </head>
+    <body style="text-align: center;overflow:hidden;">
+        <hr style="border:1.5px solid black;height:1px;border-radius: 2.5px;">
+        <b style="font-size:24px;">DATE:<span id='date'></span><br>TIME:<span id='time'></span></b>
+        <hr style="border:1.5px solid black;height:2px;border-radius: 2.5px;">
+        <div id='_' style="display:grid;grid-template-columns: 50% 50%;height:4.5em;">
+            <div>
+                <b>Select a ward from the dropdown list</b><br>
+                <div style="display:grid;grid-template-columns: 50% 50%;">
+                    <div>
+                        <select  name="state" id="select" style="font-weight: bold;color:darkblue;height:35px;width:60%" onchange="sRank()">
+                            <option value="None">CHOOSE WARD</option>
+                            <option value="CN-27">CN-27 CHENNAI NORTH</option>
+                            <option value="CN-28">CN-28 CHENNAI NORTH</option>
+                            <option value="CN-29">CN-29 CHENNAI NORTH</option>
+                            </select>
+                    </div>
+                    <div>
+                        <button style="height:25px;width:60%;height:35px;" onclick=cha()>
+                            <b style="font-size:15px;">SELECT WARD</b>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-rows: 30% 70%;">
+                <b style="margin:0px 0px;">WARD SELECTED</b>
+                <div style="border:1px solid black;margin:3px auto;width:70%;">
+                    <span style="font-weight: bold;">QUARANTINE WARD NUMBER:</span><span id='wn'>CN-27</span><BR>
+                    <span style="font-weight: bold;">LOCATION:</span>CHENNAI NORTH, TAMIL NADU, INDIA
+                </div>                
+            </div>
+        </div>
+        <hr style="border:1.5px solid black;height:2px;border-radius: 2.5px;">
+        <div style="display:grid;grid-template-columns: 49.85% 0.3% 49.85%;">
+            <div id='1' style="height:485px;text-align: center;">
+                <h1>SELECT PATIENT</h1>
+                <div id='pic1' style="border:1px solid black;height:400px;">
+                </div>
+            </div>
+            <div id='2' style="border:1.5px solid black;border-radius: 3px;"></div>
+            <div id='_3'></div>
+        </div>
+        <script type="text/javascript">
+            function date(){
+                var today = new Date();
+var dd = today.getDate();
+
+var mm = today.getMonth()+1; 
+var yyyy = today.getFullYear();
+var x=today.getHours();
+if(x>12) x-=12;
+var y=today.getMinutes();
+var st=` ${x}:${y}`;
+document.getElementById('date').innerText=" "+String(dd)+"-"+String(mm)+"-"+String(yyyy);
+document.getElementById('time').innerText=st;
+            }
+            date();
+            function cha(){
+                var q=document.getElementById('select').value;
+                document.getElementById('wn').innerText=q;
+            }
+        </script>
+    </body>
+</html>
